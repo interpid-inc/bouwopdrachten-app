@@ -1,0 +1,58 @@
+// @import "../../../styles/custom.scss";
+
+.custom-nav {
+  background: #f8fafc;
+  height: 100vh;
+  padding-right: 0;
+}
+
+.nav-link {
+  padding: 1rem 2rem 1rem 0.5rem !important;
+  color: rgb(184, 184, 184) !important;
+  border-right: 4px solid #f8fafc;
+
+  &:hover {
+    padding: 1rem 2rem 1rem 0.5rem !important;
+    color: #000 !important;
+    font-weight: 500;
+    opacity: 0.8;
+    border-right: 4px solid #007ed3;
+    background: linear-gradient(
+      270deg,
+      #cce5f6 0%,
+      rgba(204, 229, 246, 0) 100%
+    );
+
+    .active-icon {
+      color: #007ed3 !important;
+    }
+  }
+
+  // &:focus {
+  //   color: #000 !important;
+  //   font-weight: 500;
+  //   border-right: 4px solid #007ed3;
+  // }
+}
+
+.active {
+  padding: 1rem 2rem 1rem 0.5rem !important;
+  color: #000 !important;
+  font-weight: 500;
+  opacity: 0.8;
+  border-right: 4px solid #007ed3;
+  background: linear-gradient(270deg, #cce5f6 0%, rgba(204, 229, 246, 0) 100%);
+
+  .active-icon {
+    color: #007ed3 !important;
+  }
+}
+
+//   &:focus {
+//     background: linear-gradient(
+//       270deg,
+//       #cce5f6 0%,
+//       rgba(204, 229, 246, 0) 100%
+//     );
+//     opacity: 0.8;
+//   }
