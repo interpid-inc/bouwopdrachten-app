@@ -1,8 +1,49 @@
-import { Row, Col, Table, Pagination } from "react-bootstrap";
+import { Table, Pagination, Dropdown } from "react-bootstrap";
 
 import styles from "./table.module.scss";
+import { useRouter } from "next/router";
+import BannerBasic from "@/components/Molecules/BannerBasic";
 
-export default function TableBasic({ title }: { title: string }): JSX.Element {
+export default function TableBasic({
+  title,
+  headers,
+  data,
+  customEmptyText,
+}: {
+  title?: string;
+  headers: Array<{
+    title: string;
+    selector?: string;
+    Cell?: (row: any) => JSX.Element;
+    align?: string;
+    headerAlign?: string;
+    isAction?: boolean;
+    actions?: Array<{
+      label: string;
+      icon: JSX.Element;
+      onClick: (row: any) => void;
+      navigate?: string;
+    }>;
+  }>;
+  data: {
+    data: any[];
+    meta: {
+      current_page: number;
+      from: number;
+      last_page: number;
+      links: Array<{
+        label: string;
+        url: string | null;
+        active: boolean;
+      }>;
+      path: string;
+      per_page: number;
+      to: number;
+      total: number;
+    };
+  };
+  customEmptyText?: string;
+}): JSX.Element {
   let active = 2;
   let items = [];
 
@@ -14,77 +55,101 @@ export default function TableBasic({ title }: { title: string }): JSX.Element {
     );
   }
 
+  const router = useRouter();
+
   return (
-    <div className="border rounded-3 p-3">
-      <h2 className="h4 mt-2 mb-4 px-0">{title}</h2>
+    <div className="border rounded-3 py-3 px-4">
+      {title !== undefined && <h2 className="h4 mt-2 mb-4 px-0">{title}</h2>}
       <div className="table-responsive">
         <Table>
           <thead>
             <tr>
-              <td className="text-muted">Date Received</td>
-              <td className="text-muted">Lead Data</td>
-              <td className="text-muted">Phone Number</td>
-              <td className="text-muted">Email</td>
-              <td className="text-muted">Invoiced</td>
+              {headers?.map((header) => (
+                <td
+                  key={header.title}
+                  className={`text-muted text-${header.headerAlign}`}
+                >
+                  {header.title}
+                </td>
+              ))}
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>2022-12-01 • 13:47:16</td>
-              <td>Martin Garrix</td>
-              <td>0650603160</td>
-              <td>mgarrix@gmail.com</td>
-              <td>Yes</td>
-            </tr>
-            <tr>
-              <td>2022-12-01 • 13:47:16</td>
-              <td>Martin Garrix</td>
-              <td>0650603160</td>
-              <td>mgarrix@gmail.com</td>
-              <td>Yes</td>
-            </tr>
-            <tr>
-              <td>2022-12-01 • 13:47:16</td>
-              <td>Martin Garrix</td>
-              <td>0650603160</td>
-              <td>mgarrix@gmail.com</td>
-              <td>Yes</td>
-            </tr>
-            <tr>
-              <td>2022-12-01 • 13:47:16</td>
-              <td>Martin Garrix</td>
-              <td>0650603160</td>
-              <td>mgarrix@gmail.com</td>
-              <td>Yes</td>
-            </tr>
-            <tr>
-              <td>2022-12-01 • 13:47:16</td>
-              <td>Martin Garrix</td>
-              <td>0650603160</td>
-              <td>mgarrix@gmail.com</td>
-              <td>Yes</td>
-            </tr>
-            <tr>
-              <td>2022-12-01 • 13:47:16</td>
-              <td>Martin Garrix</td>
-              <td>0650603160</td>
-              <td>mgarrix@gmail.com</td>
-              <td>Yes</td>
-            </tr>
-            <tr>
-              <td>2022-12-01 • 13:47:16</td>
-              <td>Martin Garrix</td>
-              <td>0650603160</td>
-              <td>mgarrix@gmail.com</td>
-              <td>Yes</td>
-            </tr>
-            <tr>
-              <td>2022-12-01 • 13:47:16</td>
-              <td>Martin Garrix</td>
-              <td>0650603160</td>
-              <td>mgarrix@gmail.com</td>
-              <td>Yes</td>
-            </tr>
+            {data?.data?.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={headers?.length}
+                  className="px-0"
+                  style={{
+                    borderBottom: "none",
+                  }}
+                >
+                  <BannerBasic
+                    icon={"information"}
+                    variant={"warning"}
+                    text={customEmptyText || "No data available"}
+                  />
+                </td>
+              </tr>
+            ) : (
+              data?.data?.map((item) => (
+                <tr key={item.id}>
+                  {headers?.map((header, index) => (
+                    <td
+                      key={index}
+                      className={`
+                     text-${header?.align || "start"}
+                      `}
+                    >
+                      {header?.Cell
+                        ? header?.Cell(item)
+                        : item[header.selector || ""]}
+
+                      {header?.isAction && (
+                        <div className="">
+                          <Dropdown className="rounded-lg position-static">
+                            <Dropdown.Toggle
+                              id="dropdown-basic"
+                              className={styles["dropdown-toggle"]}
+                              data-toggle="dropdown"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                style={{
+                                  width: "1.5rem",
+                                  height: "1.5rem",
+                                  display: "inline-block",
+                                }}
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                                />
+                              </svg>
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                              {header.actions?.map((action, index) => (
+                                <Dropdown.Item key={index} href="#/action-1">
+                                  {action.icon && (
+                                    <span className="me-2">{action.icon}</span>
+                                  )}
+                                  <small>{action.label}</small>
+                                </Dropdown.Item>
+                              ))}
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </div>
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
           </tbody>
         </Table>
       </div>

@@ -3,7 +3,7 @@
 // Default variable overrides
 $primary: #007ed3;
 $secondary: #6c757d;
-$success: #28a745;
+$success: #12b76a;
 $info: #17a2b8;
 $warning: #ffc107;
 $danger: #f04438;
@@ -15,7 +15,7 @@ $gray-400: #9aa4b2;
 
 $light-primary: #e0f5ff;
 $light-secondary: #e2e3e5;
-$light-success: #d4edda;
+$light-success: #ecfdf3;
 $light-info: #d1ecf1;
 $light-warning: #fff3cd;
 $light-danger: #fef3f2;
@@ -38,6 +38,7 @@ $theme-colors: (
 @import "~bootstrap/scss/maps";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/root";
+@import "~bootstrap/scss/utilities";
 
 // Optional Bootstrap components here
 @import "~bootstrap/scss/reboot";
@@ -46,14 +47,19 @@ $theme-colors: (
 
 //--------Card---------//
 .card {
-  border-radius: 8px !important;
+  border-radius: 8px;
   border-color: #e3e8ef;
 }
 
 //--------Button---------//
 .btn {
-  color: #fff !important;
+  color: #fff;
   border-radius: 8px !important;
+  border-color: #e3e8ef !important;
+}
+
+.btn-light {
+  color: $dark;
 }
 
 //--------Background---------//
@@ -63,6 +69,34 @@ $theme-colors: (
 
 .bg-light-danger {
   background-color: $light-danger !important;
+}
+
+.bg-light-success {
+  background-color: $light-success !important;
+}
+
+.bg-light-info {
+  background-color: $light-info !important;
+}
+
+.bg-light-warning {
+  background-color: $light-warning !important;
+}
+
+.bg-light-secondary {
+  background-color: $light-secondary !important;
+}
+
+.bg-light {
+  background-color: $light !important;
+}
+
+.bg-dark {
+  background-color: $dark !important;
+}
+
+.bg-other-primary {
+  background-color: #007ed3 !important;
 }
 
 //--------Font Color---------//

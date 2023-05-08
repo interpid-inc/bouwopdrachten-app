@@ -1,19 +1,21 @@
 import ButtonBasic from "@/components/Atoms/Button/ButtonBasic";
+import InputArea from "@/components/Atoms/Input/InputArea";
 import InputBasic from "@/components/Atoms/Input/InputBasic";
+import InputSelect from "@/components/Atoms/Input/InputSelect";
 import TableBasic from "@/components/Organisms/Table";
 import { Row, Col, Table, Card, Form } from "react-bootstrap";
 
-export default function CompanyDetails(): JSX.Element {
+export default function AddLeads(): JSX.Element {
   return (
     <>
-      <h1 className="h5">Edit Account</h1>
+      <h1 className="h5">Add Leads</h1>
 
       <Row className="border-bottom py-4">
         <Col md="3">
-          <p className="mb-0">Contact Details</p>
+          <p className="mb-0">Lead Data</p>
           <p className="text-muted">
-            Enter your full company details below so that we can verify which
-            company is active on our platform.
+            Enter the full details of the lead here, so that it can also be
+            forwarded directly to customers.
           </p>
         </Col>
         <Col md="9">
@@ -35,37 +37,6 @@ export default function CompanyDetails(): JSX.Element {
                   />
                 </Col>
 
-                <Col md="12">
-                  <InputBasic
-                    label="Email address"
-                    type="text"
-                    outerClassName="mb-3"
-                  />
-                </Col>
-
-                <Col md="12">
-                  <InputBasic
-                    label="Phone number"
-                    type="text"
-                    outerClassName="mb-3"
-                  />
-                </Col>
-
-                <Col md="6">
-                  <InputBasic
-                    label="Street name"
-                    type="text"
-                    outerClassName="mb-3"
-                  />
-                </Col>
-                <Col md="6">
-                  <InputBasic
-                    label="House number"
-                    type="text"
-                    outerClassName="mb-3"
-                  />
-                </Col>
-
                 <Col md="6">
                   <InputBasic
                     label="Postcode"
@@ -75,86 +46,86 @@ export default function CompanyDetails(): JSX.Element {
                 </Col>
                 <Col md="6">
                   <InputBasic
-                    label="Residence"
+                    label="House Number"
                     type="text"
                     outerClassName="mb-3"
                   />
                 </Col>
-              </Row>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
 
-      <Row className="border-bottom py-4">
-        <Col md="3">
-          <p className="mb-0">Chamber of Commerce</p>
-          <p className="text-muted">
-            Only companies with a chamber of commerce number can become a member
-            of our platform.
-          </p>
-        </Col>
-        <Col md="9">
-          <Card>
-            <Card.Body>
-              <Card.Title className="fw-normal fs-6">
-                Chamber of Commerce number
-              </Card.Title>
-              <Row className="text-muted">
                 <Col md="12">
-                  <InputBasic type="text" outerClassName="mb-3" />
+                  <InputBasic
+                    label="Additional"
+                    type="text"
+                    outerClassName="mb-3"
+                  />
                 </Col>
-              </Row>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
 
-      <Row className="border-bottom py-4">
-        <Col md="3">
-          <p className="mb-0">Website & Social Media</p>
-          <p className="text-muted">
-            Place below the links of your website and social media channels (Not
-            required)
-          </p>
-        </Col>
-        <Col md="9">
-          <Card>
-            <Card.Body>
-              <Row>
                 <Col md="6">
                   <InputBasic
-                    label="Website"
+                    label="Address"
                     type="text"
                     outerClassName="mb-3"
                   />
                 </Col>
                 <Col md="6">
+                  <InputBasic label="Place" type="text" outerClassName="mb-3" />
+                </Col>
+
+                <Col md="12">
                   <InputBasic
-                    label="Facebook URL"
+                    label="Province"
                     type="text"
                     outerClassName="mb-3"
                   />
                 </Col>
+
                 <Col md="6">
                   <InputBasic
-                    label="Instagram URL"
+                    label="Email address"
                     type="text"
                     outerClassName="mb-3"
                   />
                 </Col>
+
                 <Col md="6">
                   <InputBasic
-                    label="Tiktok URL"
+                    label="Phone number"
                     type="text"
                     outerClassName="mb-3"
                   />
                 </Col>
-                <Col md="6">
+
+                <Col md="12">
+                  <InputArea outerClassName="mb-3" label="Description" />
+                </Col>
+                <Col md="12">
                   <InputBasic
-                    label="Linkedin URL"
+                    label="Source"
                     type="text"
                     outerClassName="mb-3"
+                  />
+                </Col>
+
+                <Col md="6">
+                  <InputSelect
+                    label="Type"
+                    options={[
+                      {
+                        value: "1",
+                        label: "1",
+                      },
+                    ]}
+                  />
+                </Col>
+                <Col md="6">
+                  <InputSelect
+                    label="Activities"
+                    options={[
+                      {
+                        value: "1",
+                        label: "1",
+                      },
+                    ]}
                   />
                 </Col>
               </Row>

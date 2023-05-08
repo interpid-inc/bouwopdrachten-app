@@ -1,48 +1,128 @@
-import MailIcon from "@/assets/icon/MailIcon";
-import PhoneIcon from "@/assets/icon/PhoneIcon";
-import BadgeBasic from "@/components/Atoms/Badge/BadgeBasic";
-import TableBasic from "@/components/Organisms/Table";
+import { useEffect, useState } from "react";
+import { Col, Row } from "react-bootstrap";
 
-export default function Leads(): JSX.Element {
+import Head from "next/head";
+
+import TableBasic from "@/components/Organisms/Table";
+import BadgeBasic from "@/components/Atoms/Badge/BadgeBasic";
+
+import CardAnalytics from "./CardAnalytics";
+import DetailAnalytics from "./DetailAnalytics";
+
+import { useSpring } from "@react-spring/web";
+
+export default function Analytics() {
+  const [selectedCard, setSelectedCard] = useState(0);
+
+  const cardLists = [
+    {
+      id: 1,
+      title: "Receive Leads",
+      value: "3.254",
+      percent: "7.25%",
+      increase: "250",
+      from: "last month",
+      status: 4,
+    },
+    {
+      id: 2,
+      title: "Locations",
+      value: "3.254",
+      percent: "120%",
+      increase: "13",
+      from: "last month",
+      status: 2,
+    },
+    {
+      id: 3,
+      title: "Cost",
+      value: "€2.302,5",
+      percent: "8.5%",
+      increase: "250,12",
+      from: "last month",
+      status: 2,
+    },
+  ];
+
+  const detailReceiveLeads = [
+    {
+      id: 1,
+      name: "Tile Roof",
+      total: "12 Leads",
+    },
+    {
+      id: 2,
+      name: "No plate",
+      total: "19 Leads",
+    },
+    {
+      id: 3,
+      name: "Chimney",
+      total: "35 Leads",
+    },
+    {
+      id: 4,
+      name: "Gutter",
+      total: "33 Leads",
+    },
+    {
+      id: 5,
+      name: "Dormer window / Skylight",
+      total: "8 Leads",
+    },
+  ];
+
+  const detailsLocations = [
+    {
+      id: 1,
+      name: "Groningen",
+      total: "40 Leads",
+    },
+    {
+      id: 2,
+      name: "Zeeland",
+      total: "20 Leads",
+    },
+    {
+      id: 3,
+      name: "Noord-Brabant",
+      total: "15 Leads",
+    },
+    {
+      id: 4,
+      name: "Limburg",
+      total: "45 leads",
+    },
+  ];
+
+  const detailCosts: never[] = [];
+
   const data = {
     data: [
       {
         id: 1,
-        number_id: "#0001",
-        created_at: "18-05-2022",
-        paid_status: 1,
+        date_received: "2022-12-01 • 13:47:16",
         lead_data: "Martin Garrix",
-        address: "Alexanderpark 39, 3253MX in Ouddorp",
-        email: "martin@gmail.com",
-        phone: "0612345678",
-        activities: "No Plate",
-        explanation:
-          "The existing roof (+/- 60 m2) is covered with poor quality roofing felt (bitumen). Remove this layer completely.",
+        phone: "0650603160",
+        email: "mgarrix@gmail.com",
+        status: 4,
       },
       {
         id: 2,
-        number_id: "#0002",
-        created_at: "19-06-2022",
-        paid_status: 2,
-        lead_data: "Jane Cooper",
-        address: "Noord-Holland",
-        email: "jane@gmail.com",
-        phone: "0612345678",
-        activities: "Dakbedekking",
-        explanation: "Contact details incorrect. Cannot earn money!",
+        date_received: "2022-12-06 • 13:47:16",
+        lead_data: "Roy Kiyoshi",
+        phone: "(808) 555-0111",
+        email: "rkiyoshi@gmail.com",
+        status: 2,
       },
 
       {
         id: 3,
-        number_id: "#0003",
-        created_at: "20-07-2022",
-        paid_status: 3,
-        lead_data: "Cameron Williamson",
-        address: "South-Brabant",
-        email: "cameron123@gmail.com",
-        phone: "0612345678",
-        activities: "Dakbedekking",
-        explanation: "Contact details incorrect. Cannot earn money!",
+        date_received: "2022-13-01 • 13:47:16",
+        lead_data: "Jane Cooper",
+        phone: "(217) 555-0113",
+        email: "alexandre@yahoo.com",
+        status: 4,
       },
     ],
     meta: {
@@ -75,59 +155,29 @@ export default function Leads(): JSX.Element {
 
   const headers = [
     {
-      title: "Date",
-      selector: "created_at",
+      title: "Date Received",
+      selector: "date_received",
     },
-
     {
-      title: "Lead",
+      title: "Lead Data",
       selector: "lead_data",
     },
     {
-      title: "Address",
-      selector: "address",
+      title: "Phone Number",
+      selector: "phone",
     },
     {
-      title: "Contact",
-      Cell: (row: { email: string; phone: string }) => (
-        <div>
-          <div className="d-flex align-items-center">
-            <PhoneIcon
-              style={{
-                width: "20px",
-                height: "20px",
-                marginRight: "10px",
-                color: "#007ED3",
-              }}
-            />
-            <span>{row.phone}</span>
-          </div>
-          <div className="d-flex align-items-center">
-            <MailIcon
-              style={{
-                width: "20px",
-                height: "20px",
-                marginRight: "10px",
-                color: "#007ED3",
-              }}
-            />
-            <span>{row.email}</span>
-          </div>
-        </div>
-      ),
+      title: "Email",
+      selector: "email",
     },
     {
-      title: "Activities",
-      selector: "activities",
-    },
-    {
-      title: "Explanation",
-      selector: "explanation",
-    },
-    {
-      title: "paid",
-      Cell: (row: { paid_status: number }) => (
-        <BadgeBasic withCircle status={row.paid_status} text={"No"} />
+      title: "Invoiced",
+      Cell: (row: { status: number }) => (
+        <BadgeBasic
+          withCircle
+          text={row.status === 4 ? "Yes" : "No"}
+          status={row.status}
+        />
       ),
     },
     {
@@ -196,5 +246,54 @@ export default function Leads(): JSX.Element {
       ],
     },
   ];
-  return <TableBasic headers={headers} data={data} title="Receive Leads" />;
+
+  const handleSelectedDetails = (id: number) => {
+    switch (id) {
+      case 1:
+        return detailReceiveLeads;
+      case 2:
+        return detailsLocations;
+      case 3:
+        return detailCosts;
+      default:
+        return [];
+    }
+  };
+
+  return (
+    <>
+      <Head>
+        <title>Dashboard</title>
+        <meta name="description" content="Generated by create next app" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <Row>
+        <Col
+          md="12"
+          lg={selectedCard === 0 ? 12 : 8}
+          className="order-2 order-md-1"
+        >
+          <CardAnalytics
+            lists={cardLists}
+            selectedCard={selectedCard}
+            setSelectedCard={setSelectedCard}
+          />
+          <TableBasic
+            headers={headers}
+            data={data}
+            title="Last 10 leads received"
+          />
+        </Col>
+        {selectedCard !== 0 && (
+          <DetailAnalytics
+            items={handleSelectedDetails(selectedCard)}
+            selectedCard={selectedCard}
+            setSelectedCard={setSelectedCard}
+          />
+        )}
+      </Row>
+    </>
+  );
 }

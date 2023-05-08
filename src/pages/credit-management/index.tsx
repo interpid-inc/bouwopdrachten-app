@@ -1,7 +1,6 @@
-import BadgeBasic from "@/components/Atoms/Badge/BadgeBasic";
 import TableBasic from "@/components/Organisms/Table";
 
-export default function Credits(): JSX.Element {
+export default function CreditManagement(): JSX.Element {
   const data = {
     data: [],
     meta: {
@@ -34,29 +33,24 @@ export default function Credits(): JSX.Element {
 
   const headers = [
     {
-      title: "Date",
+      title: "ID",
+      selector: "id",
+    },
+    {
+      title: "Created",
       selector: "created_at",
     },
     {
-      title: "Invoice Number",
-      selector: "number_id",
-      Cell: (row: { number_id: string }) => (
-        <span
-          className="rounded-3 py-1 px-2"
-          style={{
-            backgroundColor: "#E3E8EF",
-          }}
-        >
-          {row.number_id}
-        </span>
-      ),
+      title: "Job Type",
+      selector: "job_type",
     },
     {
-      title: "status",
-      selector: "status",
-      Cell: (row: { status: number }) => (
-        <BadgeBasic withCircle status={row.status} text={"Open"} />
-      ),
+      title: "Province",
+      selector: "province",
+    },
+    {
+      title: "Data Lead",
+      selector: "data_lead",
     },
     {
       title: "Action",
@@ -125,5 +119,12 @@ export default function Credits(): JSX.Element {
     },
   ];
 
-  return <TableBasic headers={headers} data={data} title="Credit" />;
+  return (
+    <TableBasic
+      headers={headers}
+      data={data}
+      title="Credit Management"
+      customEmptyText="No Credit Management Found"
+    />
+  );
 }

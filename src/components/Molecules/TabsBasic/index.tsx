@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Col, Nav, Row, Tab, Tabs } from "react-bootstrap";
 
-export default function TabsCustom({
+export default function TabsBasic({
   lists,
   defaultKey,
   variants,

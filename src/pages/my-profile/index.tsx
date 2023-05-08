@@ -1,14 +1,12 @@
 import BadgeBasic from "@/components/Atoms/Badge/BadgeBasic";
 import ButtonBasic from "@/components/Atoms/Button/ButtonBasic";
-import InputBasic from "@/components/Atoms/Input/InputBasic";
-import TabsCustom from "@/components/Molecules/TabsCustom";
+import TabsBasic from "@/components/Molecules/TabsBasic";
 import CompanyProfile from "@/components/Pages/MyProfile/CompanyProfile";
 import Credits from "@/components/Pages/MyProfile/Credits";
 import Invoices from "@/components/Pages/MyProfile/Invoices";
 import Leads from "@/components/Pages/MyProfile/Leads";
 import Transactions from "@/components/Pages/MyProfile/Transactions";
-import { spawn } from "child_process";
-import { Row, Col, Card, Badge } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
 
 export default function MyProfile(): JSX.Element {
   const tabLists = [
@@ -131,7 +129,7 @@ export default function MyProfile(): JSX.Element {
 
       <Row className="border-bottom py-4">
         <Col md="12">
-          <TabsCustom
+          <TabsBasic
             lists={tabLists}
             variants="pills"
             defaultKey="companyProfile"

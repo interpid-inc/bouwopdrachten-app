@@ -37,9 +37,10 @@ export default function Layouts({
         </svg>
       ),
       name: "Dashboard",
+      url: "/",
       isDropdown: false,
       isCollapse: false,
-      url: "/",
+      active: ["/"],
       subItems: [],
     },
     {
@@ -62,9 +63,10 @@ export default function Layouts({
         </svg>
       ),
       name: "Leads",
+      url: "#",
       isDropdown: true,
       isCollapse: false,
-      url: "#",
+      active: ["/my-leads", "/creditaties", "/lead-settings"],
       subItems: [
         {
           id: 21,
@@ -103,9 +105,10 @@ export default function Layouts({
         </svg>
       ),
       name: "My Company",
-      isCollapse: false,
       url: "#",
+      isCollapse: false,
       isDropdown: true,
+      active: ["/company-details", "/my-profile"],
       subItems: [
         {
           id: 31,
@@ -141,6 +144,16 @@ export default function Layouts({
       name: "Admin",
       isCollapse: false,
       isDropdown: true,
+      active: [
+        "/company-overview",
+        "/lead-overview",
+        "/add-leads",
+        "/new-leads",
+        "/credit-management",
+        "/formulate",
+        "/statistics",
+        "/open-invoices",
+      ],
       url: "#",
       subItems: [
         {
@@ -166,7 +179,7 @@ export default function Layouts({
         {
           id: 45,
           name: "Creditaties",
-          url: "/creditaties",
+          url: "/credit-management",
         },
         {
           id: 46,
@@ -216,15 +229,19 @@ export default function Layouts({
         <div className="my-4 text-center">
           <Image src={Logo} alt={"Logo"} />
         </div>
+        <h6 className="ps-3 text-gray-400 my-1" style={{ fontSize: 12 }}>
+          MAIN MENU
+        </h6>
         <Nav.Item className="ps-2">
           {adminMenu.map(
             (
               item: {
                 id: number;
-                isDropdown: boolean;
                 icon: JSX.Element;
-                name: string;
+                isDropdown: boolean;
                 isCollapse: boolean;
+                active: string[];
+                name: string;
                 url: string;
                 subItems: {
                   id: number;
@@ -239,7 +256,11 @@ export default function Layouts({
                   key={index}
                   as={Link}
                   href={item.url}
-                  className={`${styles["nav-link"]} `}
+                  className={`${styles["nav-link"]} ${
+                    item.active.includes(router.pathname)
+                      ? `${styles["active"]}`
+                      : ""
+                  }`}
                 >
                   {item.icon}
                   <span className="ms-2">{item.name}</span>
@@ -252,7 +273,11 @@ export default function Layouts({
                     onClick={() => handleCollapse(item.id)}
                     className={`d-flex justify-content-between align-items-center  ${
                       styles["nav-link"]
-                    } ${item.isCollapse ? styles["active"] : ""}`}
+                    }  ${
+                      item.active.includes(router.pathname)
+                        ? `${styles["active"]}`
+                        : ""
+                    }`}
                   >
                     <div className="d-flex align-items-center">
                       {item.icon}
@@ -294,7 +319,7 @@ export default function Layouts({
                   </Nav.Link>
                   <Collapse
                     in={item.isCollapse}
-                    className={`${styles["collapse"]}`}
+                    className={`${item.id === 4 ? styles["collapse"] : ""}`}
                   >
                     <div className="ms-4">
                       <Nav.Item>
@@ -311,7 +336,14 @@ export default function Layouts({
                               key={index}
                               as={Link}
                               href={subItem.url}
-                              className={`${styles["nav-link"]} `}
+                              onClick={() => handleCollapse(item.id)}
+                              className={`${styles["nav-link"]} 
+                              ${
+                                subItem.url === router.pathname
+                                  ? `${styles["active"]}`
+                                  : ""
+                              }
+                              `}
                             >
                               <span className="ms-2">{subItem.name}</span>
                             </Nav.Link>
@@ -324,6 +356,40 @@ export default function Layouts({
               )
           )}
         </Nav.Item>
+
+        {/* User Account on bottom fix */}
+        <div
+          className={`d-flex justify-content-between align-items-center mb-5 ${styles["profile-options"]}`}
+        >
+          <div className="d-flex justify-content-center align-items-center">
+            <Image
+              src="https://via.placeholder.com/150"
+              alt={"User"}
+              width={40}
+              height={40}
+              className="rounded-circle me-2"
+            />
+            <div className="d-flex flex-column justify-content-center">
+              <span className="fw-semibold">Martin Garrix</span>
+              <small className="text-muted">Project Manager</small>
+            </div>
+          </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            style={{ width: 20 }}
+            role="button"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+            />
+          </svg>
+        </div>
       </Nav>
 
       <section className="col-lg-8 col-xl-9 px-0">
@@ -341,7 +407,7 @@ export default function Layouts({
           </Navbar.Collapse>
         </Navbar>
 
-        <div className="px-4">{children}</div>
+        <div className="px-4 pb-4">{children}</div>
       </section>
     </div>
   );

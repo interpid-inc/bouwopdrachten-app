@@ -1,9 +1,43 @@
-import BadgeBasic from "@/components/Atoms/Badge/BadgeBasic";
 import TableBasic from "@/components/Organisms/Table";
 
-export default function Credits(): JSX.Element {
+export default function Formulate(): JSX.Element {
   const data = {
-    data: [],
+    data: [
+      {
+        id: 1,
+        website: [
+          "https://platdakspecialist.nl/",
+          "https://platdakspecialist.nl/bedankt-voor-uw-aanvraag/",
+        ],
+        embed:
+          "<iframe src='https://test.meetyourlead.nl/pages/offerte-embed.php?id=2' style='border: 0px; width: 100%; height: 355px;' scrolling='no'></iframe>",
+        leads: 5,
+        cta: "Free Quote Request",
+      },
+      {
+        id: 2,
+        website: [
+          "https://platdakspecialist.nl/",
+          "https://platdakspecialist.nl/bedankt-voor-uw-aanvraag/",
+        ],
+        embed:
+          "<iframe src='https://test.meetyourlead.nl/pages/offerte-embed.php?id=2' style='border: 0px; width: 100%; height: 355px;' scrolling='no'></iframe>",
+        leads: 152,
+        cta: "Roofer Compare Quotes",
+      },
+
+      {
+        id: 3,
+        website: [
+          "https://platdakspecialist.nl/",
+          "https://platdakspecialist.nl/bedankt-voor-uw-aanvraag/",
+        ],
+        embed:
+          "<iframe src='https://test.meetyourlead.nl/pages/offerte-embed.php?id=2' style='border: 0px; width: 100%; height: 355px;' scrolling='no'></iframe>",
+        leads: 25,
+        cta: "Free Quote Request",
+      },
+    ],
     meta: {
       current_page: 1,
       from: 1,
@@ -34,29 +68,37 @@ export default function Credits(): JSX.Element {
 
   const headers = [
     {
-      title: "Date",
-      selector: "created_at",
-    },
-    {
-      title: "Invoice Number",
+      title: "Website",
       selector: "number_id",
-      Cell: (row: { number_id: string }) => (
-        <span
-          className="rounded-3 py-1 px-2"
-          style={{
-            backgroundColor: "#E3E8EF",
-          }}
-        >
-          {row.number_id}
-        </span>
+      Cell: (row: { website: string[] }) => (
+        <div>
+          {row.website.map((item, index) => (
+            <p
+              key={index}
+              className="rounded-3 py-1 px-2"
+              style={{
+                backgroundColor: index === 0 ? "#F2EEFB" : "#E3E8EF",
+                color: index === 0 ? "#7F56D9" : "#4B5565",
+                width: "fit-content",
+              }}
+            >
+              {item}
+            </p>
+          ))}
+        </div>
       ),
     },
     {
-      title: "status",
-      selector: "status",
-      Cell: (row: { status: number }) => (
-        <BadgeBasic withCircle status={row.status} text={"Open"} />
-      ),
+      title: "Embed",
+      selector: "embed",
+    },
+    {
+      title: "leads",
+      selector: "leads",
+    },
+    {
+      title: "CTA",
+      selector: "cta",
     },
     {
       title: "Action",
@@ -124,6 +166,5 @@ export default function Credits(): JSX.Element {
       ],
     },
   ];
-
-  return <TableBasic headers={headers} data={data} title="Credit" />;
+  return <TableBasic headers={headers} data={data} title="Form Overview" />;
 }

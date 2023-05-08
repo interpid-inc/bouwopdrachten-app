@@ -1,9 +1,31 @@
-import BadgeBasic from "@/components/Atoms/Badge/BadgeBasic";
 import TableBasic from "@/components/Organisms/Table";
+import { Row, Col, Table } from "react-bootstrap";
 
-export default function Credits(): JSX.Element {
+export default function NewLeads(): JSX.Element {
   const data = {
-    data: [],
+    data: [
+      {
+        id: 1,
+        created_at: "15-08-2022",
+        job_type: "Dormer window / Skylight",
+        province: "Noord-Brabant",
+        data_lead: "Ibnu",
+      },
+      {
+        id: 2,
+        created_at: "16-09-2022",
+        job_type: "No Plate",
+        province: "Noord-Holland",
+        data_lead: "Ezra",
+      },
+      {
+        id: 3,
+        created_at: "17-10-2022",
+        job_type: "Gutter",
+        province: "South-Brabant",
+        data_lead: "Edo",
+      },
+    ],
     meta: {
       current_page: 1,
       from: 1,
@@ -34,29 +56,24 @@ export default function Credits(): JSX.Element {
 
   const headers = [
     {
-      title: "Date",
+      title: "ID",
+      selector: "id",
+    },
+    {
+      title: "Created",
       selector: "created_at",
     },
     {
-      title: "Invoice Number",
-      selector: "number_id",
-      Cell: (row: { number_id: string }) => (
-        <span
-          className="rounded-3 py-1 px-2"
-          style={{
-            backgroundColor: "#E3E8EF",
-          }}
-        >
-          {row.number_id}
-        </span>
-      ),
+      title: "Job Type",
+      selector: "job_type",
     },
     {
-      title: "status",
-      selector: "status",
-      Cell: (row: { status: number }) => (
-        <BadgeBasic withCircle status={row.status} text={"Open"} />
-      ),
+      title: "Province",
+      selector: "province",
+    },
+    {
+      title: "Data Lead",
+      selector: "data_lead",
     },
     {
       title: "Action",
@@ -125,5 +142,5 @@ export default function Credits(): JSX.Element {
     },
   ];
 
-  return <TableBasic headers={headers} data={data} title="Credit" />;
+  return <TableBasic headers={headers} data={data} title="Add Leads" />;
 }

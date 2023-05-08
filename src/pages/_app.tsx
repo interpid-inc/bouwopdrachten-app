@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import { DM_Sans } from "next/font/google";
 import Layouts from "@/components/Organisms/Layout";
 
-import "@/styles/custom.scss";
+import "src/styles/custom.scss";
 
 const DMSans = DM_Sans({
   subsets: ["latin"],
