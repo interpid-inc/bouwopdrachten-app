@@ -269,7 +269,7 @@ export default function Layouts({
                 <div key={index}>
                   <Nav.Link
                     as={Link}
-                    href=""
+                    href="#"
                     onClick={() => handleCollapse(item.id)}
                     className={`d-flex justify-content-between align-items-center  ${
                       styles["nav-link"]

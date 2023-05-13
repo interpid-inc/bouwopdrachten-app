@@ -8,21 +8,21 @@ export default function CompanyProfile(): JSX.Element {
           <Card.Body>
             <Card.Title className="mb-5">Company Information</Card.Title>
             <div className="mb-5">
-              <h1 className="h6">Company Name</h1>
+              <label className="h6">Company Name</label>
               <p className="text-muted mb-0">Martin Garix</p>
               <p className="text-muted mb-0">08213123423</p>
               <p className="text-muted mb-0">martin@test.net</p>
             </div>
             <div className="mb-5">
-              <h1 className="h6">KVK</h1>
+              <label className="h6">KVK</label>
               <p className="text-muted mb-0">-</p>
             </div>
             <div className="mb-5">
-              <h1 className="h6">Branch</h1>
+              <label className="h6">Branch</label>
               <p className="text-muted mb-0">-</p>
             </div>
             <div className="mb-5">
-              <h1 className="h6">Field</h1>
+              <label className="h6">Field</label>
               <p className="text-muted mb-0">
                 Notice: Trying to access array offset on value of type bool in
                 /home/deb141233/domains/meetyourlead.nl/public_html/test/pages/bedrijf-profiel.php
@@ -41,7 +41,7 @@ export default function CompanyProfile(): JSX.Element {
               <Card.Body>
                 <Card.Title className="mb-5">About</Card.Title>
                 <div className="mb-5">
-                  <h1 className="h6">About Company</h1>
+                  <label className="h6">About Company</label>
                   <p className="text-muted mb-0">-</p>
                 </div>
               </Card.Body>
@@ -52,7 +52,7 @@ export default function CompanyProfile(): JSX.Element {
               <Card.Body>
                 <Card.Title className="mb-5">Rating</Card.Title>
                 <div className="mb-5">
-                  <h1 className="h6">About Company</h1>
+                  <label className="h6">About Company</label>
                   <p className="text-muted mb-0">-</p>
                 </div>
               </Card.Body>

@@ -5,6 +5,10 @@ import Layouts from "@/components/Organisms/Layout";
 
 import "src/styles/custom.scss";
 
+interface MyAppProps extends AppProps {
+  // add custom props here
+}
+
 const DMSans = DM_Sans({
   subsets: ["latin"],
   weight: "400",
