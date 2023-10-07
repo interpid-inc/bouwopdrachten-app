@@ -1,0 +1,18 @@
+.active-card {
+  background-color: #007ed3;
+  color: #fff;
+}
+
+.card-middle {
+  @media (min-width: 768px) {
+    border-left: 1px solid #e0e0e0 !important;
+    border-right: 1px solid #e0e0e0 !important;
+    border-radius: 0;
+  }
+
+  @media (max-width: 767px) {
+    border-top: 1px solid #e0e0e0 !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+    border-radius: 0;
+  }
+}

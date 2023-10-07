@@ -1,0 +1,136 @@
+@import "~bootstrap/scss/bootstrap";
+
+// Default variable overrides
+$primary: #007ed3;
+$secondary: #6c757d;
+$success: #12b76a;
+$info: #17a2b8;
+$warning: #ffc107;
+$danger: #f04438;
+$light: #f8f9fa;
+$dark: #343a40;
+$white: #fff;
+$black: #000;
+$gray-400: #9aa4b2;
+
+$light-primary: #e0f5ff;
+$light-secondary: #e2e3e5;
+$light-success: #ecfdf3;
+$light-info: #d1ecf1;
+$light-warning: #fff3cd;
+$light-danger: #fef3f2;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+  "white": $white,
+  "black": $black,
+);
+
+// Required
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/maps";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/utilities";
+
+// Optional Bootstrap components here
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/buttons";
+
+//--------Card---------//
+.card {
+  border-radius: 8px;
+  border-color: #e3e8ef;
+}
+
+//--------Button---------//
+.btn {
+  color: #fff;
+  border-radius: 8px !important;
+  border-color: #e3e8ef !important;
+}
+
+.btn-primary {
+  color: $light-primary;
+  background-color: $primary;
+  border-color: $primary;
+}
+
+.btn-primary:hover {
+  color: $primary;
+  background-color: $white;
+  border: 1px solid $primary !important;
+}
+
+.btn-light {
+  color: $dark;
+}
+
+//--------Background---------//
+.bg-light-primary {
+  background-color: $light-primary !important;
+}
+
+.bg-light-danger {
+  background-color: $light-danger !important;
+}
+
+.bg-light-success {
+  background-color: $light-success !important;
+}
+
+.bg-light-info {
+  background-color: $light-info !important;
+}
+
+.bg-light-warning {
+  background-color: $light-warning !important;
+}
+
+.bg-light-secondary {
+  background-color: $light-secondary !important;
+}
+
+.bg-light {
+  background-color: $light !important;
+}
+
+.bg-dark {
+  background-color: $dark !important;
+}
+
+.bg-other-primary {
+  background-color: #007ed3 !important;
+}
+
+//--------Font Color---------//
+.text-gray-400 {
+  color: $gray-400 !important;
+}
+
+// Styles for the span circle red custom component
+.circle {
+  border-radius: 50%;
+  height: 8px;
+  width: 8px;
+  display: inline-block;
+}
+
+// Styles for the active tab custom component
+.active-tab {
+  background-color: $light-primary !important;
+  border: $primary;
+  color: $dark !important;
+}
+
+a {
+  text-decoration: none !important;
+}
