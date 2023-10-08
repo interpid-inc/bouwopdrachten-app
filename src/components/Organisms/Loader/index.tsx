@@ -21,7 +21,7 @@ export default function Loader() {
           Loading... &nbsp;
         </span> */}
         <Spinner animation="border" role="status" variant="primary">
-          <span className="visually-hidden">Loading...</span>
+          {/* <p className="visually-hidden">Loading...</p> */}
         </Spinner>
       </div>
     </div>

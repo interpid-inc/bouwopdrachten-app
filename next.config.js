@@ -17,12 +17,12 @@ const nextConfig = {
   //     handler: require.resolve("./src/app/middleware.tsx"), // Sesuaikan dengan lokasi middleware Anda
   //   },
   // ],
-  serverMiddleware: [
-    {
-      path: "/dashboard",
-      handler: "./src/app/middleware.tsx",
-    },
-  ],
+  // serverMiddleware: [
+  //   {
+  //     path: "/dashboard",
+  //     handler: "./src/app/middleware.tsx",
+  //   },
+  // ],
 };
 
 module.exports = nextConfig;

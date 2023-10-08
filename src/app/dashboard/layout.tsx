@@ -32,7 +32,7 @@ export default function DashboardLayout({
     if (middleware === null) {
       navigate.push("/login");
     }
-  }, []);
+  }, [middleware, navigate]);
 
   const handleLogout = () => {
     dispatch(logoutRequest());
@@ -573,7 +573,6 @@ export default function DashboardLayout({
 
         <div className="px-4 pb-4">{children}</div>
       </section>
-      {/* {middleware === null && <Loader />} */}
     </div>
   );
 }

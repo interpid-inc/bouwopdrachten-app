@@ -12,7 +12,7 @@ import CardAnalytics from "@/components/Pages/Dashboard/CardAnalytics";
 import DetailAnalytics from "@/components/Pages/Dashboard/DetailAnalytics";
 // import { middleware } from "../middleware";
 
-export function Home() {
+export default function Root() {
   const [selectedCard, setSelectedCard] = useState(0);
 
   const cardLists = [
@@ -298,4 +298,3 @@ export function Home() {
     </>
   );
 }
-export default Home;
