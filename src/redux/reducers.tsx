@@ -6,7 +6,7 @@ import {
   logoutRequestSlice,
   resetPasswordByEmailSlice,
   acceptPasswordByEmailSlice,
-} from "@/actions/AuthenticationAction";
+} from "@/redux/actions/AuthenticationAction";
 
 export const RootReducer = combineReducers({
   // Define reducers here

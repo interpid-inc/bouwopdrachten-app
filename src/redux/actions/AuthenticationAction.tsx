@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppDispatch } from "@/redux/store";
 import Cookies from "js-cookie";
 import { axiosClient } from "@/helpers/GatewayService";
+import { encryptData } from "@/helpers/Utils";
 
 interface initialState {
   isLoading: boolean;
@@ -60,15 +61,22 @@ export const {
 } = requestLoginSlice.actions;
 
 export const makeLoginRequest =
-  (formData: LoginForm) => async (dispatch: AppDispatch) => {
+  (formData: FormData) => async (dispatch: AppDispatch) => {
     try {
       dispatch(requestLoginStart());
 
       const response = await axiosClient.post("auth/login", formData);
 
-      Cookies.set("rememberMe", formData.remember_me);
-
       dispatch(requestLoginSuccess(response.data));
+      // if remember me is true, set cookie expires on session/default 1 month
+      (formData.get("rememberMe") as any) !== "false"
+        ? Cookies.set("user", encryptData(JSON.stringify(response.data)))
+        : Cookies.set("user", encryptData(JSON.stringify(response.data)), {
+            expires: 1,
+          });
+
+      // redirect to dashboard
+      window.location.href = "/dashboard";
     } catch (error: any) {
       dispatch(requestLoginFailure(error?.response?.data?.message));
     }
@@ -162,16 +170,16 @@ export const {
 export const logoutRequest = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(logoutRequestStart());
-    const response = await axiosClient.delete("administrator/auth/logout");
+    const response = await axiosClient.delete("auth/logout");
 
     dispatch(logoutRequestSuccess(response.data));
 
-    Cookies.remove("admin");
+    Cookies.remove("user");
 
-    setTimeout(() => {
-      window.location.href = "/login";
-    }, 1000);
+    window.location.href = "/login";
   } catch (error: any) {
+    console.log(error);
+
     dispatch(logoutRequestFailure(error?.response?.data?.message));
   }
 };

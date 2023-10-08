@@ -1,7 +1,7 @@
 import { Table, Pagination, Dropdown, Col, Row } from "react-bootstrap";
 
 import styles from "./table.module.scss";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import BannerBasic from "@/components/Molecules/BannerBasic";
 import InputBasic from "@/components/Atoms/Input/InputBasic";
 import InputSelect from "@/components/Atoms/Input/InputSelect";

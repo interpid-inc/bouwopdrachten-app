@@ -11,7 +11,8 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import InputPhone from "@/components/Atoms/Input/InputPhone";
 import Head from "next/head";
-
+import Template from "../template-auth";
+import { Fragment } from "react";
 
 function Register(): JSX.Element {
   const {
@@ -49,7 +50,7 @@ function Register(): JSX.Element {
   };
 
   return (
-    <>
+    <Template>
       <Head>
         <title>Registreer</title>
         <meta name="description" content="Registreer" />
@@ -230,7 +231,7 @@ function Register(): JSX.Element {
           </Form>
         </Card>
       </Col>
-    </>
+    </Template>
   );
 }
 

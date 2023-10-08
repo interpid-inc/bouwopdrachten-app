@@ -11,6 +11,8 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Head from "next/head";
+import Template from "../template-auth";
+import { Fragment } from "react";
 
 function ForgotPassword(): JSX.Element {
   const {
@@ -48,7 +50,7 @@ function ForgotPassword(): JSX.Element {
   };
 
   return (
-    <>
+    <Template>
       <Head>
         <title>Wachtwoord vergeten</title>
         <meta name="description" content="Forgot Password" />
@@ -112,7 +114,7 @@ function ForgotPassword(): JSX.Element {
           </Form>
         </Card>
       </Col>
-    </>
+    </Template>
   );
 }
 

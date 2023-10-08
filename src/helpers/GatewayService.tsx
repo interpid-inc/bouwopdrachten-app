@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import { getCredential } from "./Utils";
 
 const apiUrl: string =
   process.env.NEXT_PUBLIC_API_URL ?? "https://api-staging.constructapp.online";
@@ -28,20 +29,20 @@ const onRequest = (config: any): any => {
   // Proceed with the initial response
 
   // If token not null, add token to header
-  if (Cookies.get("admin") !== undefined) {
+  if (getCredential() !== null) {
     // initialize token
     const {
       token,
     }: {
       token: string;
-    } = JSON.parse(Cookies.get("admin") as any);
+    } = getCredential() as any;
 
     // add token to header
     config.headers.Authorization = `Bearer ${token}`;
   }
 
   // If token null, remove token from header
-  if (Cookies.get("admin") === undefined) {
+  if (getCredential() === null) {
     // remove token from header
     delete config.headers.Authorization;
   }
@@ -53,6 +54,7 @@ const onRequest = (config: any): any => {
  * Function for handle error by status
  *
  * @param {number} status
+ * @param message
  * @returns {string}
  */
 const handleError = (status: number, message: any): string => {
@@ -62,7 +64,8 @@ const handleError = (status: number, message: any): string => {
       errorMessage = message ?? "Bad request";
       break;
     case 401:
-      errorMessage = message ?? "Unauthorized";
+      errorMessage =
+        "Your session has expired, you'll be redirected to login page";
       break;
     case 403:
       errorMessage =
@@ -89,20 +92,27 @@ const handleError = (status: number, message: any): string => {
 
 // attach request
 axiosClient.interceptors.request.use(onRequest, null);
-let errorDisplayed: boolean = false;
+// let errorDisplayed: boolean = false;
 
 // attach response
 axiosClient.interceptors.response.use(
   async (response: AxiosResponse) => {
     return response;
   },
-  async (error: AxiosError<any>) => {
-    // Initialize error message
 
+  async (error: AxiosError<any>) => {
     // If error has response, show error message
-    if (error?.response?.data !== undefined && error?.response?.data !== null) {
-      error?.response?.status !== 422
-        ? toast.error(
+
+    if (
+      error.config !== undefined &&
+      error.config.params?.intercept_error !== true
+    ) {
+      if (
+        error?.response?.data !== undefined &&
+        error?.response?.data !== null
+      ) {
+        if (error?.response?.status !== 422) {
+          toast.error(
             handleError(
               error?.response?.status,
               error?.response?.data?.message
@@ -110,15 +120,38 @@ axiosClient.interceptors.response.use(
             {
               toastId: error?.response?.data?.message,
             }
-          )
-        : Object.keys(error?.response?.data?.errors).map((key: any) => {
+          );
+
+          // If error status is 500, reload page
+          if (error?.response?.status === 500) {
+            // reload page
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          }
+        } else {
+          // Special Case for 422 when invite member to project
+          if (
+            error.response?.data?.message ===
+            "This user or their company owner is already a member of this project."
+          ) {
+            toast.error(
+              "This user or their company owner is already a member of this project.",
+              {
+                toastId:
+                  "This user or their company owner is already a member of this project.",
+              }
+            );
+            return await Promise.reject(error);
+          }
+
+          Object.keys(error?.response?.data?.errors).map((key: any) => {
             return toast.error(error?.response?.data?.errors[key][0], {
-              toastId: error?.response?.data?.errors,
+              toastId: error?.response?.data?.errors[key][0],
             });
           });
-    } else {
-      if (!errorDisplayed) {
-        errorDisplayed = true;
+        }
+      } else {
         toast.error("An error occurred, please try again later", {
           toastId: "An error occurred, please try again later",
         });
@@ -126,13 +159,14 @@ axiosClient.interceptors.response.use(
     }
 
     // if unauthorized, redirect to login page
-    setTimeout(async () => {
-      if (error?.response?.status === 401) {
+    if (error?.response?.status === 401) {
+      setTimeout(async () => {
         Cookies.remove("user");
+        // await beamsClient.stop();
 
         window.location.href = "/login";
-      }
-    }, 2000);
+      }, 2000);
+    }
 
     return await Promise.reject(error);
   }

@@ -7,6 +7,8 @@ export default function ButtonBasic({
   className,
   type,
   onClick,
+  loading,
+  disabled,
 }: {
   id?: string;
   text: string | JSX.Element;
@@ -14,6 +16,8 @@ export default function ButtonBasic({
   className?: string;
   type: "button" | "submit" | "reset";
   onClick?: () => void;
+  loading?: boolean;
+  disabled?: boolean;
 }): JSX.Element {
   return (
     <Button
@@ -22,7 +26,16 @@ export default function ButtonBasic({
       type={type}
       className={`${className} rounded-3 px-3`}
       onClick={onClick}
+      disabled={disabled !== undefined ? disabled : loading}
     >
+      {loading && (
+        <span
+          className="spinner-border spinner-border-sm me-2"
+          role="status"
+          aria-hidden="true"
+        ></span>
+      )}
+
       {text}
     </Button>
   );

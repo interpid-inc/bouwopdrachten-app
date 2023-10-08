@@ -1,20 +1,42 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { Nav, Collapse, Navbar, Dropdown } from "react-bootstrap";
 
-import { useRouter } from "next/router";
+import { usePathname, useRouter } from "next/navigation";
 
 import Logo from "@/assets/svg/Logo.svg";
 import Link from "next/link";
 import Image from "next/image";
 
-import styles from "./layout.module.scss";
+import styles from "@/styles/dashboard.module.scss";
+import { useAppDispatch } from "@/redux/store";
+import { logoutRequest } from "@/redux/actions/AuthenticationAction";
+// import { privateMiddleware } from "@/middleware/authMiddleware";
+import { getCredential } from "@/helpers/Utils";
+import Loader from "@/components/Organisms/Loader";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }): JSX.Element {
-  const router = useRouter();
+  const pathname = usePathname();
+  const dispatch = useAppDispatch();
+
+  const middleware = getCredential();
+  const navigate = useRouter();
+
+  // TODO:MIDDLEWARE
+  useEffect(() => {
+    if (middleware === null) {
+      navigate.push("/login");
+    }
+  }, []);
+
+  const handleLogout = () => {
+    dispatch(logoutRequest());
+  };
 
   const [adminMenu, setAdminMenu] = useState([
     {
@@ -37,10 +59,10 @@ export default function DashboardLayout({
         </svg>
       ),
       name: "Dashboard",
-      url: "/",
+      url: "/dashboard",
       isDropdown: false,
       isCollapse: false,
-      active: ["/"],
+      active: ["/dashboard"],
       subItems: [],
     },
     {
@@ -67,31 +89,31 @@ export default function DashboardLayout({
       isDropdown: true,
       isCollapse: false,
       active: [
-        "/leads-overzicht",
-        "/niuewe-leads",
-        "/creditaties",
-        "/lead-toevoegen",
+        "/dashboard/leads-overzicht",
+        "/dashboard/niuewe-leads",
+        "/dashboard/creditaties",
+        "/dashboard/lead-toevoegen",
       ],
       subItems: [
         {
           id: 21,
           name: "Leads Overzicht",
-          url: "/leads-overzicht",
+          url: "/dashboard/leads-overzicht",
         },
         {
           id: 22,
           name: "Niuewe Leads",
-          url: "/niuewe-leads",
+          url: "/dashboard/niuewe-leads",
         },
         {
           id: 23,
           name: "Creditaties",
-          url: "/creditaties",
+          url: "/dashboard/creditaties",
         },
         {
           id: 24,
           name: "Lead Toevoegen",
-          url: "/lead-toevoegen",
+          url: "/dashboard/lead-toevoegen",
         },
       ],
     },
@@ -118,22 +140,26 @@ export default function DashboardLayout({
       url: "#",
       isCollapse: false,
       isDropdown: true,
-      active: ["/bedrijfsoverzicht", "/dubbel-accounts", "uitgezette-accounts"],
+      active: [
+        "/dashboard/bedrijfsoverzicht",
+        "/dashboard/dubbel-accounts",
+        "/dashboard/uitgezette-accounts",
+      ],
       subItems: [
         {
           id: 31,
           name: "Bedrijfsoverzicht",
-          url: "/bedrijfsoverzicht",
+          url: "/dashboard/bedrijfsoverzicht",
         },
         {
           id: 32,
           name: "Dubbel Accounts",
-          url: "/dubbel-accounts",
+          url: "/dashboard/dubbel-accounts",
         },
         {
           id: 33,
           name: "Uitgezette Accounts",
-          url: "/uitgezette-accounts",
+          url: "/dashboard/uitgezette-accounts",
         },
       ],
     },
@@ -157,10 +183,10 @@ export default function DashboardLayout({
         </svg>
       ),
       name: "Bellijst",
-      url: "/bellijst",
+      url: "/dashboard/bellijst",
       isCollapse: false,
       isDropdown: false,
-      active: ["/bellijst"],
+      active: ["dashboard/bellijst"],
       subItems: [],
     },
     {
@@ -186,12 +212,12 @@ export default function DashboardLayout({
       url: "#",
       isCollapse: false,
       isDropdown: true,
-      active: ["/overzicht"],
+      active: ["/dashboard/overzicht"],
       subItems: [
         {
           id: 51,
           name: "Overzicht",
-          url: "/overzicht",
+          url: "/dashboard/overzicht",
         },
       ],
     },
@@ -223,38 +249,38 @@ export default function DashboardLayout({
         {
           id: 61,
           name: "Branches",
-          url: "/branches",
+          url: "/dashboard/branches",
         },
         {
           id: 62,
           name: "Werkzaamheden",
-          url: "/werkzaamheden",
+          url: "/dashboard/werkzaamheden",
         },
         // {
         //   id: 43,
         //   name: "Add Leads",
-        //   url: "/add-leads",
+        //   url: "/dashboard/add-leads",
         // },
 
         // {
         //   id: 45,
         //   name: "Creditaties",
-        //   url: "/credit-management",
+        //   url: "/dashboard/credit-management",
         // },
         // {
         //   id: 46,
         //   name: "Formulate",
-        //   url: "/formulate",
+        //   url: "/dashboard/formulate",
         // },
         // {
         //   id: 47,
         //   name: "Statistics",
-        //   url: "/statistics",
+        //   url: "/dashboard/statistics",
         // },
         // {
         //   id: 48,
         //   name: "Open Invoices",
-        //   url: "/open-invoices",
+        //   url: "/dashboard/open-invoices",
         // },
       ],
     },
@@ -286,12 +312,12 @@ export default function DashboardLayout({
         {
           id: 71,
           name: "Leads",
-          url: "/leads",
+          url: "/dashboard/leads",
         },
         {
           id: 72,
           name: "Omzet",
-          url: "/omzet",
+          url: "/dashboard/omzet",
         },
       ],
     },
@@ -354,9 +380,7 @@ export default function DashboardLayout({
                   as={Link}
                   href={item.url}
                   className={`${styles["nav-link"]} ${
-                    item.active.includes(router.pathname)
-                      ? `${styles["active"]}`
-                      : ""
+                    item.active.includes(pathname) ? `${styles["active"]}` : ""
                   }`}
                 >
                   {item.icon}
@@ -371,7 +395,7 @@ export default function DashboardLayout({
                     className={`d-flex justify-content-between align-items-center  ${
                       styles["nav-link"]
                     }  ${
-                      item.active.includes(router.pathname)
+                      item.active.includes(pathname)
                         ? `${styles["active"]}`
                         : ""
                     }`}
@@ -436,7 +460,7 @@ export default function DashboardLayout({
                               onClick={() => handleCollapse(item.id)}
                               className={`${styles["nav-link"]} 
                               ${
-                                subItem.url === router.pathname
+                                subItem.url === pathname
                                   ? `${styles["active"]}`
                                   : ""
                               }
@@ -497,7 +521,10 @@ export default function DashboardLayout({
               </svg>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item href="/login">
+              <Dropdown.Item
+                onClick={() => handleLogout()}
+                className={styles["dropdown-item"]}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -517,7 +544,7 @@ export default function DashboardLayout({
                   />
                 </svg>
 
-                <small className="text-danger">Logout</small>
+                <small className="link-danger">Logout</small>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
@@ -546,6 +573,7 @@ export default function DashboardLayout({
 
         <div className="px-4 pb-4">{children}</div>
       </section>
+      {/* {middleware === null && <Loader />} */}
     </div>
   );
 }
